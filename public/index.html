@@ -61,11 +61,25 @@
     }).join('');
   }
 
+  function toggleDone(e) {
+    // if e.target isn't the input, then we skip the rest
+    if(!e.target.matches('input')) return;
+    const el = e.target;
+    // the data attribute we gave our inputs
+    const index = el.dataset.index;
+    // flip flops between true and false
+    items[index].done = !items[index].done;
+    localStorage.setItem('items', JSON.stringify(items));
+    populateList(items, itemsList);
+
+
+  }
+
   // listening for submit instead of click covers all of our bases
   addItems.addEventListener('submit', addItem);
-
+  itemsList.addEventListener('click', toggleDone);
+  // when we add a new thing, the list repopulates, and so doesn't get the event Listener
   populateList(items, itemsList);
-
 </script>
 
 
