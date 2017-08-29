@@ -30,6 +30,36 @@
   const itemsList = document.querySelector('.plates');
   const items = [];
 
+  function addItem(e) {
+    e.preventDefault();
+    // 'this' in this case refers to the element that is being submitted, aka the form
+    const text = (this.querySelector('[name=item]')).value;
+    const item = {
+      // below is ES6 for text: text;
+      text,
+      done: false
+    }
+    items.push(item);
+    populateList(items, itemsList)
+    this.reset();
+  }
+
+  // this function will add the actual html
+  // takes the actual list and a location to put the list as arguments
+  function populateList(plates = [], platesList) {
+    platesList.innerHTML = plates.map((plate, i) => {
+      return `
+        <li>
+          <label for="">${plate.text}</label>
+        </li>
+      `;
+      // map returns an array, so we use the join method to make it into one string
+    }).join('');
+  }
+
+  // listening for submit instead of click covers all of our bases
+  addItems.addEventListener('submit', addItem);
+
 </script>
 
 
