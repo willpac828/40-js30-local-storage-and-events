@@ -22,6 +22,7 @@
     <form class="add-items">
       <input type="text" name="item" placeholder="Item Name" required>
       <input type="submit" value="+ Add Item">
+      <button class="clear">Clear All</button>
     </form>
   </div>
 
@@ -30,6 +31,7 @@
   const itemsList = document.querySelector('.plates');
   // look for items in local storage, and if it doesn't exist yet, then it'a an empty array
   const items = JSON.parse(localStorage.getItem('items')) || [];
+  const clearAll = document.querySelector('.clear');
 
   function addItem(e) {
     // by default, a form submission wants to send to external server, so it refreshes. We are just doing local, so no refresh
@@ -74,14 +76,22 @@
     localStorage.setItem('items', JSON.stringify(items));
     populateList(items, itemsList);
 
-
   }
+
+  function clearItems() {
+    localStorage.removeItem('items');
+    location.reload();
+  }
+
 
   // listening for submit instead of click covers all of our bases
   addItems.addEventListener('submit', addItem);
   itemsList.addEventListener('click', toggleDone);
+  clearAll.addEventListener('click', clearItems);
   // when we add a new thing, the list repopulates, and so doesn't get the event Listener
   populateList(items, itemsList);
+
+  // CHALLENGE: Buttons that Clear All or Check All or Uncheck All
 </script>
 
 
