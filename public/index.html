@@ -32,6 +32,7 @@
   const items = JSON.parse(localStorage.getItem('items')) || [];
 
   function addItem(e) {
+    // by default, a form submission wants to send to external server, so it refreshes. We are just doing local, so no refresh
     e.preventDefault();
     // 'this' in this case refers to the element that is being submitted, aka the form
     const text = (this.querySelector('[name=item]')).value;
@@ -44,6 +45,7 @@
     populateList(items, itemsList);
     // can only use strings in localStorage
     localStorage.setItem('items', JSON.stringify(items));
+    // form method that empties fields upon submission
     this.reset();
   }
 
